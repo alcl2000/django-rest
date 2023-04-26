@@ -1,6 +1,7 @@
 from django.http import Http404
 from django.shortcuts import render
 from rest_framework import status, permissions
+from drf_api.permissions import IsOwnerOrReadOnly
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import Post
@@ -34,9 +35,7 @@ class PostListView(APIView):
 
 class PostDetail(APIView):
     serializer_class = PostSerializer
-    permission_classes = [
-        permissions.IsAuthenticatedOrReadOnly
-    ]
+    permission_classes = [IsOwnerOrReadOnly]
 
     def get_object(self, pk):
         try:
