@@ -7,7 +7,10 @@ from posts.models import Post
 
 class Like(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='like')
+    post = models.ForeignKey(Post, 
+                             on_delete=models.CASCADE, 
+                             related_name='like'
+                             )
     created_at = models.DateTimeField(auto_now=True)
 
     class Meta:
