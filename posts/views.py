@@ -10,9 +10,9 @@ class PostListView(generics.ListCreateAPIView):
     permission_classes = [
         permissions.IsAuthenticatedOrReadOnly
     ]
-    queryset = Post.objects.filter(
+    queryset = Post.objects.annotate(
         comments_count=Count('comment', distinct=True),
-        likes_count=Count('likes', distinct=True)
+        likes_count=Count('like', distinct=True)
     ).order_by('-created_at')
     filter_backends = [
         filters.OrderingFilter
@@ -25,9 +25,12 @@ class PostListView(generics.ListCreateAPIView):
 
     def perform_create(self, request):
         serializer.save(owner=self.request.user)
-        
+
 
 class PostDetail(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [IsOwnerOrReadOnly]
     serializer_class = PostSerializer
-    queryset = Post.objects.all()
+    queryset = Post.objects.annotate(
+        comments_count=Count('comment', distinct=True),
+        likes_count=Count('like', distinct=True)
+    ).order_by('-created_at')
