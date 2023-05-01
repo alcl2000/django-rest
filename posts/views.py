@@ -3,6 +3,7 @@ from django.db.models import Count
 from drf_api.permissions import IsOwnerOrReadOnly
 from .models import Post
 from .serializers import PostSerializer
+from django_filters.rest_framework import DjangoFilterBackend
 
 
 class PostListView(generics.ListCreateAPIView):
@@ -16,7 +17,13 @@ class PostListView(generics.ListCreateAPIView):
     ).order_by('-created_at')
     filter_backends = [
         filters.OrderingFilter,
-        filters.SearchFilter
+        filters.SearchFilter,
+        DjangoFilterBackend
+    ]
+    filterset_fields = [
+        'owner__followed__owner__profile',
+        'like__owner__profile',
+        'owner__profile',
     ]
     search_fields = [
         'owner__username',
