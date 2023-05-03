@@ -16,13 +16,19 @@ import os
 if os.path.exists('env.py'):
     import env
 
+CLOUDINARY_STORAGE = {
+    'CLOUDINARY_URL': os.environ.get('CLOUDINARY_URL')
+}
+MEDIA_URL = '/media/'
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES' : {
         'rest_framework.authentication.SessionAuthentication'
-        if 'DEV' in os.environ
+        if DEV in os.environ
         else 'dj_rest_auth.jwt_auth.JWTCookieAuthentification'
     }
 }
@@ -57,7 +63,9 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'cloudinary_storage',
     'django.contrib.staticfiles',
+    'cloudinary',
     'rest_framework',
     'django_filters',
     'rest_framework.authtoken',
