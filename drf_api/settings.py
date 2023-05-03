@@ -38,9 +38,11 @@ REST_FRAMEWORK = {
     'DATETIME_FORMAT': '%d %b %Y'
 }
 
-REST_FRAMEWORK['DEFAULT_RENDER_CLASSES'] = [
-    'rest_framework.renderers.JSONRender'
-]
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+    )
+}
 
 REST_AUTH_SERIALIZER = {
     'USER_DETAILS_SERIALIZER': 'drf_api.serializer.CurrentUserSerializer'
