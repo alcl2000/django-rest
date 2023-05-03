@@ -38,10 +38,9 @@ REST_FRAMEWORK = {
     'DATETIME_FORMAT': '%d %b %Y'
 }
 
-if 'DEV' not in os.environ:
-    REST_FRAMEWORK['DEFAULT_RENDER_CLASSES'] = [
-        'rest_framework.renderers.JSONRender'
-    ]
+REST_FRAMEWORK['DEFAULT_RENDER_CLASSES'] = [
+    'rest_framework.renderers.JSONRender'
+]
 
 REST_AUTH_SERIALIZER = {
     'USER_DETAILS_SERIALIZER': 'drf_api.serializer.CurrentUserSerializer'
